@@ -76,7 +76,7 @@ class VisibleRenderScene extends FixedScene {
             document.getElementById(this.name).hidden = true;
         } else {
             document.getElementById(this.name).removeAttribute("hidden");
-            this.onVisibleScroll(keys, anchors);
+            this.onVisibleChange(keys, anchors);
         }
     }
 
@@ -89,6 +89,6 @@ class VisibleRenderScene extends FixedScene {
         }
     }
 
-    onVisibleScroll(_keys, _anchors) {}
+    onVisibleChange(_keys, _anchors) {}
     onVisibleFrame(_keys, _anchors) {}
 }
