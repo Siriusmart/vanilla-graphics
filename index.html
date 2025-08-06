@@ -9,16 +9,21 @@
   <body>
     <div id="back"></div>
     <div id="front">
+      <keydef scene="one" property="x" type="number"></keydef>
+      <keydef scene="one" property="y" type="number"></keydef>
+
       <p style="padding-bottom: 200px; padding-top: 200px">A</p>
-      <p style="padding-bottom: 200px; padding-top: 200px">B</p>
       <key scene="one" property="y" value="-1"></key>
       <key scene="one" property="x" value="-1"></key>
+      <p style="padding-bottom: 200px; padding-top: 200px">B</p>
       <key scene="one" property="y" value="1"></key>
       <key scene="one" property="x" value="1"></key>
       <p style="padding-top: 200px; padding-bottom: 200px">C</p>
       <p style="padding-top: 200px; padding-bottom: 200px">D</p>
     </div>
+    <script src="./matrix.js"></script>
     <script src="./keyfilter.js"></script>
+    <script src="./interpolation.js"></script>
     <script src="./scenes.js"></script>
     <script src="./renderer.js"></script>
     <script src="./one.js"></script>

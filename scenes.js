@@ -1,14 +1,16 @@
 function filterKeys(keys, filters) {
     let changed = false;
+    let totalFilters = 0;
     for (let [fieldName, filterList] of Object.entries(filters)) {
         for (let filter of filterList) {
+            totalFilters++;
             keys[fieldName] = filter.pass(keys[fieldName]);
             if (keys[fieldName] == null) keys[fieldName] = keys;
             else changed = true;
         }
     }
 
-    return changed ? keys : null;
+    return changed || totalFilters == 0 ? keys : null;
 }
 
 class EmptyScene {
