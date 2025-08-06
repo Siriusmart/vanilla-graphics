@@ -1,6 +1,24 @@
 var interpolation = {
+    nearest(keyframes) {
+        let before, after;
+
+        for (let { position, value } of keyframes) {
+            if (position <= 0) {
+                before = { position, value };
+            } else {
+                after ??= { position, value };
+            }
+        }
+
+        if (before == undefined) return [after.value, { after }];
+        if (after == undefined) return [before.value, { before }];
+
+        if (Math.abs(before.position) < Math.abs(after.position))
+            return [before.value, { before, after }];
+        else return [after.value, { before, after }];
+    },
+
     linear(keyframes) {
-        let res = [null, {}];
         let before, after;
 
         for (let { position, value } of keyframes) {
@@ -26,16 +44,5 @@ var interpolation = {
         ];
     },
 
-    polynomial(keyframes) {
-        let orderedKeyframes = {};
-
-        for (let key of keyframes) {
-            orderedKeyframes[key.scene] ??= {};
-            orderedKeyframes[key.scene][key.property] ??= {};
-            orderedKeyframes[key.scene][key.property].push(key);
-        }
-
-        for (let [sceneName, keys] of orderedKeyframes) {
-        }
-    },
+    polynomial(keyframes) {},
 };

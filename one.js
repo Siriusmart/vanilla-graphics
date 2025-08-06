@@ -14,12 +14,12 @@ class SceneOne extends VisibleRenderScene {
         this.addKeyFilter("y", new SmoothedKeyFilter("exponential"));
     }
 
-    onVisibleChange(_keys, _anchors) {
+    onChange(_keys, _anchors) {
         this.ctx.canvas.width = window.innerWidth;
         this.ctx.canvas.height = window.innerHeight;
     }
 
-    onVisibleFrame({ x, y }, _anchors) {
+    onFrame({ x, y }, _anchors) {
         this.ctx.clearRect(0, 0, this.board.width, this.board.height);
         let { width, height } = this.board;
 

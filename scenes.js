@@ -1,11 +1,13 @@
-function filterKeys(keys, filters) {
+function filterKeys(originalKeys, filters) {
+    let keys = structuredClone(originalKeys);
     let changed = false;
     let totalFilters = 0;
     for (let [fieldName, filterList] of Object.entries(filters)) {
         for (let filter of filterList) {
             totalFilters++;
             keys[fieldName] = filter.pass(keys[fieldName]);
-            if (keys[fieldName] == null) keys[fieldName] = keys;
+            if (keys[fieldName] == null)
+                keys[fieldName] = originalKeys[fieldName];
             else changed = true;
         }
     }
@@ -22,16 +24,18 @@ class EmptyScene {
     }
 
     onFrameRaw(keys, anchors) {
-        keys = filterKeys(structuredClone(keys), this.keyFilters);
+        keys = filterKeys(keys, this.keyFilters);
         if (keys != null) this.onFrame(keys, anchors);
     }
 
-    onChangeRaw(keys, anchors, params = {}) {
-        let filteredKeys = filterKeys(structuredClone(keys), this.keyFilters);
-        if (params.force && filteredKeys == null) filteredKeys = keys;
+    onChangeRaw(keys, ...params) {
+        let filteredKeys = filterKeys(keys, this.keyFilters);
+        if (params[params.length - 1].force && filteredKeys == null)
+            filteredKeys = keys;
+
         if (filteredKeys != null) {
-            this.onChange(filteredKeys, anchors);
-            this.onFrame(filteredKeys, anchors);
+            this.onChange(filteredKeys, ...params);
+            this.onFrame(filteredKeys, ...params);
         }
     }
 

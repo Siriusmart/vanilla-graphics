@@ -1,20 +1,28 @@
 let scenes = {};
 let keyCache = null;
-let keyTypes = {};
+let keyDefs = {};
 
 Array.from(document.getElementsByTagName("keydef")).forEach((defElem) => {
     let sceneName = defElem.getAttribute("scene");
     let propertyName = defElem.getAttribute("property");
-    keyTypes[sceneName] ??= {};
-    keyTypes[sceneName][propertyName] = defElem.getAttribute("type");
+    keyDefs[sceneName] ??= {};
+    keyDefs[sceneName][propertyName] ??= {};
+
+    if (defElem.getAttribute("smooth") == null)
+        defElem.setAttribute("smooth", "nearest");
+
+    for (let attrName of defElem.getAttributeNames()) {
+        keyDefs[sceneName][propertyName][attrName] =
+            defElem.getAttribute(attrName);
+    }
 });
 
 Array.from(document.getElementsByTagName("key")).forEach((keyElem) => {
     let sceneName = keyElem.getAttribute("scene");
     let propertyName = keyElem.getAttribute("property");
     if (
-        keyTypes[sceneName] == undefined ||
-        keyTypes[sceneName][propertyName] == undefined
+        keyDefs[sceneName] == undefined ||
+        keyDefs[sceneName][propertyName] == undefined
     ) {
         console.error(
             `Keyframe exist but definition for ${sceneName}.${propertyName} does not exist.`,
@@ -73,10 +81,12 @@ let vanillaGraphics = {
         for (let [scene, sceneKeys] of Object.entries(orderedKeyframes)) {
             interpolatedKeys[scene] ??= [];
             for (let [property, keys] of Object.entries(sceneKeys)) {
-                interpolation.linear(keys).forEach((value, index) => {
-                    interpolatedKeys[scene][index] ??= {};
-                    interpolatedKeys[scene][index][property] = value;
-                });
+                interpolation[keyDefs[scene][property].smooth](keys).forEach(
+                    (value, index) => {
+                        interpolatedKeys[scene][index] ??= {};
+                        interpolatedKeys[scene][index][property] = value;
+                    },
+                );
             }
         }
 
