@@ -1,44 +1,41 @@
 var interpolation = {
     linear(keyframes) {
-        let res = {};
+        let res = [null, {}];
+        let before, after;
 
-        for (let { position, scene, property, value } of keyframes) {
-            res[scene] ??= [{}, {}];
-            res[scene][1][property] ??= {};
-
+        for (let { position, value } of keyframes) {
             if (position <= 0) {
-                res[scene][1][property].before = { position, value };
+                before = { position, value };
             } else {
-                res[scene][1][property].after ??= { position, value };
+                after ??= { position, value };
             }
         }
 
-        for (let [scene, keys] of Object.entries(res)) {
-            for (let [property, { before, after }] of Object.entries(keys[1])) {
-                if (before == undefined) {
-                    res[scene][0][property] = after.value;
-                    continue;
-                }
-                if (after == undefined) {
-                    res[scene][0][property] = before.value;
-                    continue;
-                }
-
-                if (keyTypes[scene][property] != "number") {
-                    res[scene][0][property] =
-                        Math.abs(before.position) < Math.abs(after.position)
-                            ? before.value
-                            : after.value;
-                    continue;
-                }
-
-                res[scene][0][property] =
-                    (before.value * Math.abs(after.position) +
-                        after.value * Math.abs(before.position)) /
-                    (Math.abs(after.position) + Math.abs(before.position));
-            }
+        if (before == undefined) {
+            return [after.value, { after }];
+        }
+        if (after == undefined) {
+            return [before.value, { before }];
         }
 
-        return res;
+        return [
+            (before.value * Math.abs(after.position) +
+                after.value * Math.abs(before.position)) /
+                (Math.abs(after.position) + Math.abs(before.position)),
+            { before, after },
+        ];
+    },
+
+    polynomial(keyframes) {
+        let orderedKeyframes = {};
+
+        for (let key of keyframes) {
+            orderedKeyframes[key.scene] ??= {};
+            orderedKeyframes[key.scene][key.property] ??= {};
+            orderedKeyframes[key.scene][key.property].push(key);
+        }
+
+        for (let [sceneName, keys] of orderedKeyframes) {
+        }
     },
 };

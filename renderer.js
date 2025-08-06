@@ -29,14 +29,15 @@ let vanillaGraphics = {
                 "Attempting to add an object which is not an instanceof EmptyScene",
             );
 
+        if (keyCache == null) this.onChange();
         scene.onChangeRaw(...keyCache[scene.name]);
         scenes[scene.name] = scene;
     },
 
     onFrame() {
+        if (keyCache == null) this.onChange();
         for (let [sceneName, scene] of Object.entries(scenes)) {
-            keyCache[sceneName] ??= [];
-            scene.onFrameRaw(...keyCache[scene.name]);
+            scene.onFrameRaw(...(keyCache[sceneName] ?? []));
         }
 
         requestAnimationFrame(vanillaGraphics.onFrame);
@@ -45,22 +46,45 @@ let vanillaGraphics = {
     onChange(params = {}) {
         let keyframes = Array.from(document.getElementsByTagName("key")).map(
             (elem) => {
-                return {
+                let res = {
                     position:
                         elem.getBoundingClientRect().top -
                         window.innerHeight / 2,
-                    scene: elem.getAttribute("scene"),
-                    property: elem.getAttribute("property"),
-                    value: elem.getAttribute("value"),
                 };
+
+                for (let attrName of elem.getAttributeNames()) {
+                    res[attrName] = elem.getAttribute(attrName);
+                }
+
+                return res;
             },
         );
 
-        keyCache = interpolation.linear(keyframes);
+        let orderedKeyframes = {};
+
+        for (let key of keyframes) {
+            orderedKeyframes[key.scene] ??= {};
+            orderedKeyframes[key.scene][key.property] ??= [];
+            orderedKeyframes[key.scene][key.property].push(key);
+        }
+
+        let interpolatedKeys = {};
+
+        for (let [scene, sceneKeys] of Object.entries(orderedKeyframes)) {
+            interpolatedKeys[scene] ??= [];
+            for (let [property, keys] of Object.entries(sceneKeys)) {
+                interpolation.linear(keys).forEach((value, index) => {
+                    interpolatedKeys[scene][index] ??= {};
+                    interpolatedKeys[scene][index][property] = value;
+                });
+            }
+        }
 
         for (let [sceneName, scene] of Object.entries(scenes)) {
-            scene.onChangeRaw(...keyCache[sceneName], params);
+            scene.onChangeRaw(...interpolatedKeys[sceneName], params);
         }
+
+        keyCache = interpolatedKeys;
     },
 };
 
