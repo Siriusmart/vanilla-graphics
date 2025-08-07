@@ -9,16 +9,18 @@
   <body>
     <div id="back"></div>
     <div id="front">
-      <keydef scene="one" property="x" type="number" smooth="nearest"></keydef>
-      <keydef scene="one" property="y" type="number" smooth="linear"></keydef>
+      <keydef scene="one" property="x" type="number" smooth="polynomial" />
+      <keydef scene="one" property="y" type="number" smooth="polynomial" />
 
       <p style="padding-bottom: 200px; padding-top: 200px">A</p>
-      <key scene="one" property="y" value="-1"></key>
-      <key scene="one" property="x" value="-1"></key>
+      <key scene="one" property="y" value="-1" gradient="0" />
+      <key scene="one" property="x" value="-1" gradient="0" />
       <p style="padding-bottom: 200px; padding-top: 200px">B</p>
-      <key scene="one" property="y" value="1"></key>
-      <key scene="one" property="x" value="1"></key>
+      <key scene="one" property="y" value="0" gradient="-0.01" />
+      <key scene="one" property="x" value="0" gradient="0.01" />
       <p style="padding-top: 200px; padding-bottom: 200px">C</p>
+      <key scene="one" property="y" value="1" gradient="0" />
+      <key scene="one" property="x" value="1" gradient="0" />
       <p style="padding-top: 200px; padding-bottom: 200px">D</p>
     </div>
     <script src="./matrix.js"></script>

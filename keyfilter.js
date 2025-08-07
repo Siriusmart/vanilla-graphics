@@ -28,17 +28,23 @@ class SmoothedKeyFilter extends LazyKeyFilter {
             case "exponential":
                 params.speed ??= 0.1;
                 params.effectiveZero ??= 0.01;
+
                 this.algorithm = (key) => {
+                    let now = Date.now();
+                    let res;
                     if (
                         this.previous == undefined ||
                         Math.abs(this.previous - key) < params.effectiveZero
-                    )
-                        return key;
-                    else
-                        return (
-                            params.speed * key +
-                            this.previous * (1 - params.speed)
-                        );
+                    ) {
+                        res = key;
+                    } else {
+                        let factor =
+                            params.speed * (now - this.previousTick) * 0.1;
+                        res = factor * key + this.previous * (1 - factor);
+                    }
+
+                    this.previousTick = now;
+                    return res;
                 };
                 break;
             default:
