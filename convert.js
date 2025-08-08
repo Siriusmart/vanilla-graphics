@@ -17,10 +17,10 @@ function toHtmlDocument(markdownContent, htmlTemplate, prettyFormat = true) {
         .forEach((elem) => {
             elem.parentNode.remove();
             let includes = yaml.load(elem.innerHTML);
-            includes.script ??= [];
-            includes.deferScript ??= [];
-            includes.style ??= [];
-            includes.deferStyle ??= [];
+            includes.js ??= [];
+            includes['defer-js'] ??= [];
+            includes.css ??= [];
+            includes['defer-css'] ??= [];
 
             for (let script of includes.script) {
                 let scriptElem = dom.window.document.createElement("script");
