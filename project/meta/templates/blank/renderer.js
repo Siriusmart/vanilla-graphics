@@ -38,7 +38,7 @@ let vanillaGraphics = {
             );
 
         if (keyCache == null) this.onChange();
-        scene.onChangeRaw(...keyCache[scene.name]);
+        scene.onChangeRaw(...(keyCache[scene.name] ?? [undefined]));
         scenes[scene.name] = scene;
     },
 
@@ -91,7 +91,7 @@ let vanillaGraphics = {
         }
 
         for (let [sceneName, scene] of Object.entries(scenes)) {
-            scene.onChangeRaw(...interpolatedKeys[sceneName], params);
+            scene.onChangeRaw(...(interpolatedKeys[sceneName] ?? [{}]), params);
         }
 
         keyCache = interpolatedKeys;
