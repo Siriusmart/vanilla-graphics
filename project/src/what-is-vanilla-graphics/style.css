@@ -1,0 +1,32 @@
+body {
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+floatbox {
+  border: 1px solid black;
+  display: block;
+  --width: 20vw;
+  width: var(--width);
+  max-width: fit-content;
+  text-justify: auto;
+  text-align: justify;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: white;
+  --shift: 0;
+  transform: translateX(var(--shift));
+}
+
+vspace {
+  --height: 0;
+  height: var(--height);
+  margin: 0;
+  display: block;
+}
