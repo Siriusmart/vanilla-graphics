@@ -1,8 +1,9 @@
 var interpolation = {
-    nearest(keyframes) {
+    nearest(keyframes, { type }) {
         let before, after;
 
         for (let { position, value } of keyframes) {
+            if (type == "number") value = parseFloat(value);
             if (position <= 0) {
                 before = { position, value };
             } else {

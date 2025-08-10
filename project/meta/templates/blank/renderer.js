@@ -81,12 +81,12 @@ let vanillaGraphics = {
         for (let [scene, sceneKeys] of Object.entries(orderedKeyframes)) {
             interpolatedKeys[scene] ??= [];
             for (let [property, keys] of Object.entries(sceneKeys)) {
-                interpolation[keyDefs[scene][property].smooth](keys).forEach(
-                    (value, index) => {
-                        interpolatedKeys[scene][index] ??= {};
-                        interpolatedKeys[scene][index][property] = value;
-                    },
-                );
+                interpolation[keyDefs[scene][property].smooth](keys, {
+                    type: keyDefs[scene][property].type,
+                }).forEach((value, index) => {
+                    interpolatedKeys[scene][index] ??= {};
+                    interpolatedKeys[scene][index][property] = value;
+                });
             }
         }
 

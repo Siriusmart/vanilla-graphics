@@ -1,13 +1,13 @@
 {
   "name": "vanillagraphics",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.8",
+  "description": "A Markdown flavour with support for keyframed animations.",
   "license": "ISC",
-  "author": "",
+  "author": "Siriusmart",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+      "vanillagraphics": "./commands/entry.js"
   },
   "dependencies": {
     "install": "^0.13.0",
@@ -18,5 +18,9 @@
     "remark-html": "^16.0.1",
     "remark-parse": "^11.0.0",
     "unified": "^11.0.5"
-  }
+  },
+  "files": [
+      "*",
+      "project/*"
+  ]
 }
