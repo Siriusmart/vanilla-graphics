@@ -1,42 +1,28 @@
 #!/usr/bin/env node
-const fs = require("fs");
+let path = require("node:path");
+
 let args = process.argv.slice(2);
 
-function build() {
-    if (fs.existsSync("./src")) {
-        console.log("Building of project started.");
-        let start = Date.now();
-        require("../lib/build").build();
-        console.log(`Build completed in ${Date.now() - start}ms.`);
-    } else {
-        console.error(
-            "Project has not yet been initialised, run `npx vanillagraphics init` to initialised the project.",
-        );
-    }
-}
+let { init } = require("./init");
+let { build } = require("./build");
+let { serve } = require("./serve");
 
-function init() {
-    if (fs.existsSync("./src")) {
-        console.error(
-            "Project has already been initialised, run `npx vanillagraphics build` to build the project.",
-        );
-    } else {
-        require("../lib/init").init();
-        console.log("Project initialised.");
-    }
-}
+let projectPath = ".";
 
 switch (args[0]) {
     case undefined:
         const fs = require("fs");
-        if (fs.existsSync("./src")) build();
-        else init();
+        if (fs.existsSync(path.join(projectPath, "./src"))) build(projectPath);
+        else init(projectPath);
         break;
     case "init":
-        init();
+        init(projectPath);
         break;
     case "build":
-        build();
+        build(projectPath);
+        break;
+    case "serve":
+        serve(projectPath);
         break;
     default:
         console.error(`Unknown command ${args[0]}.`);

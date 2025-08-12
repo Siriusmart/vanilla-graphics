@@ -362,7 +362,7 @@ nonogram-solver:
 
 ```anchor
 bottom:
-  nonogram-solver: top
+  nonogram-solver: bottom
 ```
 
 <center style="margin: 20px;">
