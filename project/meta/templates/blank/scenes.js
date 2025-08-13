@@ -1,20 +1,21 @@
 function filterKeys(originalKeys, filters) {
     let keys = structuredClone(originalKeys);
-    let changed = false;
+    let unchanged = undefined
 
     fields: for (let fieldName of Object.keys(keys ?? {})) {
         for (let filter of filters[fieldName] ?? []) {
             keys[fieldName] = filter.pass(keys[fieldName]);
             if (keys[fieldName] == null) {
+                unchanged ??= true
                 keys[fieldName] = originalKeys[fieldName];
                 continue fields;
             } else {
-                changed = true;
+                unchanged = false
             }
         }
     }
 
-    return changed ? keys : null;
+    return unchanged ? null : keys;
 }
 
 class EmptyScene {
