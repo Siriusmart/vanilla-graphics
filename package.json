@@ -10,6 +10,8 @@
     "vanillagraphics": "./commands/entry.js"
   },
   "dependencies": {
+    "decompress": "^4.2.1",
+    "download": "^8.0.0",
     "install": "^0.13.0",
     "js-yaml": "^4.1.0",
     "jsdom": "^26.1.0",
