@@ -1,5 +1,6 @@
 ```settings
 title: Basic Usage of Vanilla Graphics
+template: basic
 ```
 
 ```include

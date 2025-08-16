@@ -3,8 +3,10 @@ class IntroSquareScene extends AnchoredCanvasScene {
         super("intro-square");
         this.addKeyFilter("width", new SmoothedKeyFilter("exponential"));
         this.addKeyFilter("height", new SmoothedKeyFilter("exponential"));
-        this.addKeyFilter("x", new SmoothedKeyFilter("exponential"));
         this.addKeyFilter("y", new SmoothedKeyFilter("exponential"));
+        this.addKeyFilter("x", new SmoothedKeyFilter("exponential"));
+        this.addKeyFilter("height", new EmptyKeyFilter());
+        this.addKeyFilter("width", new EmptyKeyFilter());
         this.addKeyFilter("color", new LazyKeyFilter());
         this.addKeyFilter("opacity", new LazyKeyFilter());
     }
