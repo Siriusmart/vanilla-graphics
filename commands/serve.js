@@ -13,7 +13,7 @@ function serve(projectPath) {
         `Build completed in ${Date.now() - start}ms, watching file changes.`,
     );
 
-    console.log("Started development server at http://0.0.0.0:8000");
+    console.log("Started development server.")
 
     let params = {
         port: 8000,
@@ -23,6 +23,7 @@ function serve(projectPath) {
         wait: 0,
         logLevel: 0,
     };
+
     liveServer.start(params);
     require("../lib/watch").watch(projectPath);
 }
