@@ -1,0 +1,7 @@
+{
+    "templates": [
+        "cs-latex",
+        "blank",
+        "basic"
+    ]
+}
