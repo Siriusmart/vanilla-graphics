@@ -1,6 +1,6 @@
 {
   "name": "vanillagraphics",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "A Markdown flavour with support for keyframed animations.",
   "license": "ISC",
   "author": "Siriusmart",
@@ -15,6 +15,7 @@
     "js-yaml": "^4.1.0",
     "jsdom": "^26.1.0",
     "live-server": "^1.2.0",
+    "pretty": "^2.0.0",
     "rehype-stringify": "^10.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
