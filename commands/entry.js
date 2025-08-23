@@ -11,7 +11,11 @@ let { install } = require("./install");
 (async () => {
     let projectPath = ".";
 
-    if (args[0] != "install" && !fs.existsSync("./meta/templates")) {
+    if (
+        args[0] != "install" &&
+        fs.existsSync("./site.json") &&
+        !fs.existsSync("./meta/templates")
+    ) {
         console.log("Pulling required templates");
         await install(projectPath);
     }

@@ -2,13 +2,13 @@ const fs = require("fs");
 const path = require("node:path");
 const liveServer = require("live-server");
 
-function serve(projectPath) {
+async function serve(projectPath) {
     if (!fs.existsSync(path.join(projectPath, "./src")))
-        require("./init").init(projectPath);
+        await require("./init").init(projectPath);
 
     console.log("Initial building of project started.");
     let start = Date.now();
-    require("../lib/build").build();
+    await require("../lib/build").build();
     console.log(
         `Build completed in ${Date.now() - start}ms, watching file changes.`,
     );
@@ -25,7 +25,7 @@ function serve(projectPath) {
     };
 
     liveServer.start(params);
-    require("../lib/watch").watch(projectPath);
+    await require("../lib/watch").watch(projectPath);
 }
 
 module.exports = { serve };
