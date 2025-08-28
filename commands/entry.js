@@ -7,6 +7,7 @@ let { init } = require("./init");
 let { build } = require("./build");
 let { serve } = require("./serve");
 let { install } = require("./install");
+let { setupTemplates } = require("../lib/install.js");
 
 (async () => {
     let projectPath = ".";
@@ -19,6 +20,8 @@ let { install } = require("./install");
         console.log("Pulling required templates");
         await install(projectPath);
     }
+
+		await setupTemplates(projectPath);
 
     switch (args[0]) {
         case undefined:
